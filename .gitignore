@@ -1,0 +1,12 @@
+# OS / editor
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Node (nếu dùng sau này)
+node_modules/
+dist/
