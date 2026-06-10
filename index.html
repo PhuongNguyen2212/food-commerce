@@ -308,6 +308,60 @@
   .reveal { opacity:0; transform:translateY(30px); transition:.7s cubic-bezier(.16,1,.3,1); }
   .reveal.visible { opacity:1; transform:translateY(0); }
 
+  /* ===== Câu chuyện khởi nghiệp ===== */
+  .story-grid { display:grid; grid-template-columns:1.3fr 1fr; gap:50px; align-items:center; margin:50px 0; }
+  .story-text p { color:var(--text); margin-bottom:16px; }
+  .story-text blockquote {
+    border-left:4px solid var(--do-gach); padding:6px 0 6px 22px; margin:22px 0;
+    font-family:'Playfair Display'; font-style:italic; font-size:1.2rem; color:var(--nau-dam); line-height:1.5;
+  }
+  .founder { display:flex; align-items:center; gap:14px; margin-top:18px; }
+  .founder img { width:56px; height:56px; border-radius:50%; object-fit:cover; border:3px solid var(--vang-nhat); background:#fff; }
+  .founder strong { color:var(--nau-dat); display:block; }
+  .founder small { color:var(--muted); }
+  .story-visual img { width:100%; border-radius:24px; box-shadow:var(--shadow-lg); background:#fff; aspect-ratio:1/1; object-fit:contain; padding:18px; }
+
+  .timeline { margin-top:14px; }
+  .tl-years { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:26px; }
+  .tl-year {
+    padding:12px 26px; border-radius:50px; border:2px solid #e8d9c4; background:#fff; cursor:pointer;
+    font-weight:800; font-family:'Playfair Display'; font-size:1.05rem; color:var(--nau-dat); transition:.25s;
+  }
+  .tl-year:hover { border-color:var(--do-gach); transform:translateY(-2px); }
+  .tl-year.active { background:var(--nau-dat); color:#fff; border-color:var(--nau-dat); transform:translateY(-3px); box-shadow:var(--shadow); }
+  .tl-panel {
+    background:#fff; border-radius:var(--radius); padding:34px; box-shadow:var(--shadow);
+    display:flex; gap:24px; align-items:flex-start; max-width:760px; margin:0 auto; animation:fadeView .4s ease;
+  }
+  .tl-panel .tl-icon { min-width:64px; height:64px; border-radius:50%; background:var(--vang-nhat); color:var(--nau-dat); display:grid; place-items:center; font-size:1.8rem; }
+  .tl-panel h3 { color:var(--do-gach); margin-bottom:8px; font-size:1.25rem; }
+  .tl-panel p { color:var(--muted); }
+
+  /* ===== Doanh nghiệp: stats + tabs ===== */
+  .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin:48px 0; }
+  .stat-card { text-align:center; padding:30px 18px; background:#fff; border-radius:var(--radius); box-shadow:var(--shadow); transition:.3s; }
+  .stat-card:hover { transform:translateY(-5px); box-shadow:var(--shadow-lg); }
+  .stat-card i { font-size:2.4rem; color:var(--do-gach); margin-bottom:10px; display:block; }
+  .stat-num { font-family:'Playfair Display'; font-weight:900; font-size:2.3rem; color:var(--nau-dat); line-height:1; }
+  .stat-label { color:var(--muted); margin-top:8px; font-size:.92rem; }
+
+  .biz-tabs { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:24px; }
+  .biz-tab {
+    padding:12px 26px; border-radius:50px; border:none; background:var(--vang-nhat); color:var(--nau-dam);
+    font-family:inherit; font-weight:600; font-size:.98rem; cursor:pointer; transition:.25s; display:inline-flex; gap:8px; align-items:center;
+  }
+  .biz-tab:hover { background:#eccf97; }
+  .biz-tab.active { background:var(--do-gach); color:#fff; box-shadow:0 8px 18px rgba(192,57,43,.3); }
+  .biz-panel {
+    background:linear-gradient(135deg,var(--nau-dat),var(--nau-dam)); color:#fff; border-radius:var(--radius);
+    padding:44px; max-width:820px; margin:0 auto; text-align:center; animation:fadeView .4s ease;
+  }
+  .biz-panel i { font-size:3rem; color:var(--vang-nhat); margin-bottom:14px; display:block; }
+  .biz-panel h3 { font-size:1.6rem; margin-bottom:12px; color:#fff; }
+  .biz-panel p { opacity:.92; max-width:640px; margin:0 auto; line-height:1.7; }
+  .biz-panel .biz-values { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:20px; }
+  .biz-panel .biz-values span { background:rgba(255,255,255,.15); padding:8px 18px; border-radius:50px; font-weight:600; font-size:.92rem; }
+
   /* ===== Page hero (sub pages) ===== */
   .page-head { padding-top:120px; padding-bottom:0; }
   .breadcrumb { color:var(--muted); font-size:.9rem; margin-bottom:6px; }
@@ -336,6 +390,11 @@
     .pd-ship { grid-template-columns:1fr; }
     .toast-wrap { right:14px; left:14px; bottom:14px; }
     .toast { min-width:auto; }
+    .story-grid { grid-template-columns:1fr; gap:30px; }
+    .story-visual { order:-1; max-width:320px; margin:0 auto; }
+    .stats-grid { grid-template-columns:repeat(2,1fr); gap:16px; }
+    .tl-panel { flex-direction:column; align-items:center; text-align:center; padding:26px; }
+    .biz-panel { padding:32px 24px; }
   }
   @media (max-width:480px){
     .grid-4 { grid-template-columns:1fr; }
@@ -366,7 +425,8 @@
     <nav class="nav-links" id="navLinks">
       <a onclick="go('home')" data-nav="home" class="active">Trang chủ</a>
       <a onclick="go('product')" data-nav="product">Sản phẩm</a>
-      <a href="#cam-ket" onclick="go('home')">Cam kết</a>
+      <a href="#cau-chuyen" onclick="go('home')">Câu chuyện</a>
+      <a href="#doanh-nghiep" onclick="go('home')">Doanh nghiệp</a>
       <a href="#danh-gia" onclick="go('home')">Đánh giá</a>
       <a onclick="go('cart')" data-nav="cart">Giỏ hàng</a>
     </nav>
@@ -418,6 +478,60 @@
       <div class="reveal"><h3>100%</h3><p>Thịt bò tươi tuyển chọn, sấy thủ công</p></div>
       <div class="reveal"><h3>0</h3><p>Chất bảo quản — an toàn cho cả gia đình</p></div>
       <div class="reveal"><h3>5+ năm</h3><p>Giữ trọn công thức gia vị gia truyền</p></div>
+    </div>
+  </section>
+
+  <!-- Câu chuyện khởi nghiệp -->
+  <section id="cau-chuyen" style="background:linear-gradient(180deg,var(--kem),#fdeedd);">
+    <div class="container">
+      <div class="text-center">
+        <span class="eyebrow reveal">Câu chuyện của chúng tôi</span>
+        <h2 class="section-title reveal">Hành trình khởi nghiệp PEPE FOOD</h2>
+        <p class="section-sub reveal">Từ căn bếp nhỏ đến thương hiệu khô bò được hơn 1.200 khách hàng tin yêu.</p>
+      </div>
+
+      <div class="story-grid">
+        <div class="story-text reveal">
+          <p>PEPE FOOD bắt đầu từ một căn bếp nhỏ ở Sài Gòn năm <b>2021</b>, khi <b>Chị Hai</b> quyết định biến công thức khô bò gia truyền của gia đình thành món quà gửi đến mọi người. Không hương liệu, không chất bảo quản — chỉ có thịt bò tươi, gia vị truyền thống và sự tỉ mỉ trong từng mẻ sấy.</p>
+          <p>Những gói khô bò đầu tiên được bạn bè, người thân đặt mua rồi truyền tai nhau. Chú ếch <b>Pepe</b> đội mũ đầu bếp tinh nghịch trở thành biểu tượng vui nhộn, gần gũi — đại diện cho tinh thần <i>"làm bằng cả trái tim"</i> của chúng tôi.</p>
+          <blockquote>"Chúng tôi không chỉ bán khô bò — chúng tôi chia sẻ hương vị của ký ức và sự tử tế."</blockquote>
+          <div class="founder">
+            <img src="logo.jpg" alt="Chị Hai" onerror="this.src='https://i.pravatar.cc/100?img=5'" />
+            <div><strong>Chị Hai</strong><small>Nhà sáng lập PEPE FOOD</small></div>
+          </div>
+        </div>
+        <div class="story-visual reveal">
+          <img src="logo.jpg" alt="PEPE FOOD" onerror="this.src='https://images.unsplash.com/photo-1606851091851-e8c8c0fca5ba?w=700&q=80'" />
+        </div>
+      </div>
+
+      <!-- Timeline tương tác -->
+      <p class="text-center reveal" style="color:var(--nau-dam); font-weight:600; margin-bottom:18px;">
+        <i class="ph-fill ph-cursor-click" style="color:var(--do-gach);"></i> Bấm vào từng năm để xem cột mốc
+      </p>
+      <div class="timeline reveal">
+        <div class="tl-years" id="tlYears"></div>
+        <div class="tl-panel" id="tlPanel"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Về doanh nghiệp -->
+  <section id="doanh-nghiep">
+    <div class="container">
+      <div class="text-center">
+        <span class="eyebrow reveal">Về doanh nghiệp</span>
+        <h2 class="section-title reveal">PEPE FOOD trong những con số</h2>
+        <p class="section-sub reveal">Mỗi con số là một lời cảm ơn gửi đến khách hàng đã đồng hành cùng chúng tôi.</p>
+      </div>
+
+      <div class="stats-grid" id="statsGrid"></div>
+
+      <p class="text-center reveal" style="color:var(--nau-dam); font-weight:600; margin:10px 0 18px;">
+        <i class="ph-fill ph-hand-pointing" style="color:var(--do-gach);"></i> Chọn một mục để tìm hiểu thêm về chúng tôi
+      </p>
+      <div class="biz-tabs reveal" id="bizTabs"></div>
+      <div class="biz-panel reveal" id="bizPanel"></div>
     </div>
   </section>
 
@@ -672,6 +786,34 @@ const PD_REVIEWS = [
   { name:'Phương Vy', role:'Đã mua 200g', avatar:'https://i.pravatar.cc/100?img=45', text:'Nhậu lai rai hết sảy. Shop tư vấn nhiệt tình, giao đúng hẹn.' },
 ];
 
+const TIMELINE = [
+  { year:'2021', title:'Khởi nguồn từ căn bếp gia đình', icon:'ph-cooking-pot',
+    text:'Chị Hai bắt đầu làm những mẻ khô bò đầu tiên theo công thức gia truyền, bán cho bạn bè và người thân ngay tại căn bếp nhỏ ở Sài Gòn.' },
+  { year:'2022', title:'Những đơn hàng online đầu tiên', icon:'ph-shopping-bag',
+    text:'PEPE FOOD lên Zalo & Facebook. Chú ếch Pepe đội mũ đầu bếp ra đời làm linh vật. Tháng đầu tiên cán mốc hơn 50 đơn hàng.' },
+  { year:'2023', title:'Chuẩn hoá quy trình sản xuất', icon:'ph-seal-check',
+    text:'Đầu tư máy hút chân không, đóng gói chuyên nghiệp và tuân thủ tiêu chuẩn an toàn vệ sinh thực phẩm trong từng mẻ sấy.' },
+  { year:'2024', title:'Phủ sóng toàn quốc', icon:'ph-truck',
+    text:'Hệ thống giao hàng vươn tới 63 tỉnh thành. Hơn 800 khách hàng thân thiết quay lại đặt hàng đều đặn mỗi tháng.' },
+  { year:'2025', title:'Thương hiệu được yêu thích', icon:'ph-trophy',
+    text:'Hơn 1.200 khách hàng tin dùng, điểm đánh giá 4.9/5. PEPE FOOD tiếp tục mở rộng dòng sản phẩm và giữ trọn hương vị gia truyền.' },
+];
+const STATS = [
+  { icon:'ph-calendar-check', value:5,     suffix:'+', label:'Năm kinh nghiệm' },
+  { icon:'ph-package',        value:50000, suffix:'+', label:'Gói khô bò đã bán' },
+  { icon:'ph-users-three',    value:1200,  suffix:'+', label:'Khách hàng tin dùng' },
+  { icon:'ph-map-pin',        value:63,    suffix:'',  label:'Tỉnh thành phủ sóng' },
+];
+const BIZ = [
+  { tab:'Sứ mệnh', icon:'ph-target', title:'Sứ mệnh',
+    body:'Mang hương vị khô bò gia truyền — thơm ngon, an toàn và tử tế — đến với mọi gia đình Việt, biến món ăn vặt quen thuộc thành trải nghiệm đáng nhớ.' },
+  { tab:'Tầm nhìn', icon:'ph-eye', title:'Tầm nhìn',
+    body:'Trở thành thương hiệu khô bò handmade được yêu thích hàng đầu Việt Nam, nơi truyền thống gặp gỡ sự sáng tạo và niềm vui.' },
+  { tab:'Giá trị cốt lõi', icon:'ph-heart', title:'Giá trị cốt lõi',
+    body:'Bốn giá trị làm nên PEPE FOOD trong từng sản phẩm:',
+    values:['Chất lượng','Tử tế','Truyền thống','Đổi mới'] },
+];
+
 /* ===================== STATE ===================== */
 let cart = JSON.parse(localStorage.getItem('pepe_cart') || '[]');
 let pdState = { sizeIndex:0, qty:1 };
@@ -732,6 +874,59 @@ const testiCard = t => `
 function renderTestimonials(){
   document.getElementById('testiGrid').innerHTML = TESTIMONIALS.map(testiCard).join('');
   document.getElementById('pdReviews').innerHTML = PD_REVIEWS.map(testiCard).join('');
+}
+
+/* ===================== STORY + DOANH NGHIỆP ===================== */
+function renderStory(){
+  document.getElementById('tlYears').innerHTML = TIMELINE.map((t,i)=>
+    `<button class="tl-year ${i===0?'active':''}" onclick="selectTimeline(${i})">${t.year}</button>`).join('');
+  showTimeline(0);
+
+  document.getElementById('statsGrid').innerHTML = STATS.map(s=>
+    `<div class="stat-card reveal">
+       <i class="ph-fill ${s.icon}"></i>
+       <div class="stat-num" data-target="${s.value}" data-suffix="${s.suffix}">0${s.suffix}</div>
+       <div class="stat-label">${s.label}</div>
+     </div>`).join('');
+
+  document.getElementById('bizTabs').innerHTML = BIZ.map((b,i)=>
+    `<button class="biz-tab ${i===0?'active':''}" onclick="selectBiz(${i})"><i class="ph-fill ${b.icon}"></i> ${b.tab}</button>`).join('');
+  showBiz(0);
+}
+function selectTimeline(i){
+  document.querySelectorAll('.tl-year').forEach((b,idx)=>b.classList.toggle('active', idx===i));
+  showTimeline(i);
+}
+function showTimeline(i){
+  const t = TIMELINE[i];
+  document.getElementById('tlPanel').innerHTML =
+    `<div class="tl-icon"><i class="ph-fill ${t.icon}"></i></div>
+     <div><h3>${t.year} — ${t.title}</h3><p>${t.text}</p></div>`;
+}
+function selectBiz(i){
+  document.querySelectorAll('.biz-tab').forEach((b,idx)=>b.classList.toggle('active', idx===i));
+  showBiz(i);
+}
+function showBiz(i){
+  const b = BIZ[i];
+  const values = b.values ? `<div class="biz-values">${b.values.map(v=>`<span>${v}</span>`).join('')}</div>` : '';
+  document.getElementById('bizPanel').innerHTML =
+    `<i class="ph-fill ${b.icon}"></i><h3>${b.title}</h3><p>${b.body}</p>${values}`;
+}
+
+/* Đếm số động khi cuộn tới */
+let statsAnimated = false;
+function animateStats(){
+  if(statsAnimated) return; statsAnimated = true;
+  document.querySelectorAll('.stat-num').forEach(el=>{
+    const target = +el.dataset.target, suffix = el.dataset.suffix || '', dur = 1400, start = performance.now();
+    (function step(now){
+      const p = Math.min((now-start)/dur, 1);
+      el.textContent = Math.floor(p*target).toLocaleString('vi-VN') + suffix;
+      if(p<1) requestAnimationFrame(step);
+      else el.textContent = target.toLocaleString('vi-VN') + suffix;
+    })(start);
+  });
 }
 
 /* ===================== PRODUCT DETAIL ===================== */
@@ -911,9 +1106,17 @@ function initReveal(){
 /* ===================== INIT ===================== */
 renderFeatured();
 renderTestimonials();
+renderStory();
 renderProductDetail();
 updateBadge();
 initReveal();
+
+/* Kích hoạt đếm số khi phần doanh nghiệp lọt vào màn hình */
+const statsObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{ if(en.isIntersecting){ animateStats(); statsObserver.disconnect(); } });
+}, { threshold:0.3 });
+const statsEl = document.getElementById('statsGrid');
+if(statsEl) statsObserver.observe(statsEl);
 </script>
 </body>
 </html>
