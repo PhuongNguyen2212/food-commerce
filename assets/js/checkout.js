@@ -64,8 +64,10 @@ async function submitOrder(e) {
     toast('Đặt hàng thành công!', `Mã đơn ${orderId} — chúng tôi sẽ liên hệ sớm.`, 'success');
     setTimeout(() => go('home'), 1500);
   } catch (err) {
+    // EmailJS trả về { status, text }. Hiện rõ để dễ chẩn đoán.
+    const detail = err && (err.text || err.message) ? `${err.status || ''} ${err.text || err.message}`.trim() : 'Lỗi không xác định';
     console.error('[EmailJS] Lỗi gửi đơn:', err);
-    toast('Gửi đơn thất bại', 'Vui lòng thử lại hoặc liên hệ Zalo 0908 164 168', 'warning');
+    toast('Gửi đơn thất bại', detail, 'warning');
   } finally {
     btn.disabled = false;
     btn.innerHTML = btnHTML;
