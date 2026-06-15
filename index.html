@@ -14,6 +14,9 @@
 <!-- Phosphor Icons -->
 <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
+<!-- EmailJS — gửi thông tin đơn hàng về email cửa hàng -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <style>
   :root {
     --nau-dat:  #7B3F00;
@@ -65,6 +68,9 @@
   .btn-ghost { background:var(--vang-nhat); color:var(--nau-dam); }
   .btn-ghost:hover { background:#eccf97; }
   .btn-block { width:100%; justify-content:center; }
+  .btn:disabled { opacity:.7; cursor:wait; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .ph-circle-notch { display:inline-block; animation:spin .8s linear infinite; }
 
   /* Pulse on hero CTA */
   .pulse::after {
@@ -761,6 +767,19 @@
 <div class="toast-wrap" id="toastWrap"></div>
 
 <script>
+/* ===================== EMAILJS CONFIG ===================== */
+/* Lấy Public Key tại: EmailJS Dashboard → Account → General → Public Key */
+const EMAILJS = {
+  publicKey      : 'YOUR_EMAILJS_PUBLIC_KEY', // <-- THAY bằng Public Key của bạn
+  serviceId      : 'service_z26yju6',
+  orderTemplateId: 'template_lfy9uxa',
+  storeEmail     : 'thongnt@huflit.edu.vn',   // email nhận đơn (nếu template dùng biến to_email)
+};
+const EMAILJS_READY = EMAILJS.publicKey && !EMAILJS.publicKey.startsWith('YOUR_');
+if (window.emailjs && EMAILJS_READY) {
+  emailjs.init({ publicKey: EMAILJS.publicKey });
+}
+
 /* ===================== DATA ===================== */
 const SIZES = [
   { size:'100g', price:100000 },
@@ -1067,18 +1086,55 @@ function renderCheckout(){
     <p style="margin-top:14px; color:var(--muted); font-size:.85rem;"><i class="ph ph-info"></i> Thanh toán khi nhận hàng (COD).</p>`;
 }
 
-function submitOrder(e){
+async function submitOrder(e){
   e.preventDefault();
   if(cart.length===0){ toast('Giỏ hàng trống', 'Vui lòng thêm sản phẩm', 'warning'); go('product'); return; }
-  const order = {
-    name: cName.value, phone: cPhone.value, address: cAddress.value, note: cNote.value,
-    items: cart, total: cartTotal(), date: new Date().toISOString()
+
+  const btn = document.querySelector('#checkoutForm button[type="submit"]');
+  const btnHTML = btn.innerHTML;
+
+  // Thông tin đơn hàng
+  const orderId = 'PEPE' + Date.now().toString().slice(-8);
+  const itemsText = cart.map(c=>`• Khô Bò ${c.size} × ${c.qty} = ${fmt(c.price*c.qty)}`).join('\n');
+  const params = {
+    order_id        : orderId,
+    customer_name   : cName.value.trim(),
+    customer_phone  : cPhone.value.trim(),
+    customer_address: cAddress.value.trim(),
+    customer_note   : cNote.value.trim() || '(không có)',
+    order_items     : itemsText,
+    order_total     : fmt(cartTotal()),
+    order_date      : new Date().toLocaleString('vi-VN'),
+    payment_method  : 'COD — Thanh toán khi nhận hàng',
+    to_email        : EMAILJS.storeEmail,
+    to_name         : 'PEPE FOOD',
+    from_name       : cName.value.trim(),
+    reply_to        : cPhone.value.trim(),
   };
-  console.log('ĐƠN HÀNG MỚI:', order); // sẵn sàng tích hợp EmailJS sau
-  cart = []; saveCart(); updateBadge();
-  document.getElementById('checkoutForm').reset();
-  toast('Đặt hàng thành công!', 'Chúng tôi sẽ liên hệ sớm.', 'success');
-  setTimeout(()=>go('home'), 1400);
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="ph-bold ph-circle-notch"></i> Đang gửi đơn hàng...';
+
+  try {
+    if (EMAILJS_READY && window.emailjs) {
+      await emailjs.send(EMAILJS.serviceId, EMAILJS.orderTemplateId, params);
+    } else {
+      // Chế độ demo: chưa cấu hình Public Key → chỉ log ra console
+      console.warn('[EmailJS] Chưa cấu hình Public Key — chạy chế độ demo, không gửi email thật.');
+      console.log('ĐƠN HÀNG MỚI:', params);
+      await new Promise(r=>setTimeout(r, 700));
+    }
+    cart = []; saveCart(); updateBadge();
+    document.getElementById('checkoutForm').reset();
+    toast('Đặt hàng thành công!', `Mã đơn ${orderId} — chúng tôi sẽ liên hệ sớm.`, 'success');
+    setTimeout(()=>go('home'), 1500);
+  } catch (err) {
+    console.error('[EmailJS] Lỗi gửi đơn:', err);
+    toast('Gửi đơn thất bại', 'Vui lòng thử lại hoặc liên hệ Zalo 0908 164 168', 'warning');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = btnHTML;
+  }
 }
 
 /* ===================== TOAST ===================== */
