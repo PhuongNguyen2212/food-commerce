@@ -34,10 +34,28 @@ python -m http.server 8000
 
 ```
 .
-├── index.html   # Toàn bộ website (SPA)
-├── logo.jpg     # Logo thương hiệu PEPE FOOD
-└── README.md
+├── index.html              # Markup (HTML) của toàn bộ SPA
+├── logo.jpg                # Logo thương hiệu PEPE FOOD
+├── README.md
+└── assets/
+    ├── css/
+    │   └── styles.css      # Toàn bộ giao diện
+    └── js/                 # JS tách theo từng mối quan tâm (nạp tuần tự)
+        ├── config.js       # Cấu hình EmailJS
+        ├── data.js         # Dữ liệu: sản phẩm, đánh giá, câu chuyện, số liệu
+        ├── utils.js        # fmt tiền, toast, hiệu ứng fade-in
+        ├── store.js        # State giỏ hàng + localStorage
+        ├── navigation.js   # Chuyển trang, navbar, menu mobile
+        ├── home.js         # Render sản phẩm nổi bật + đánh giá
+        ├── story.js        # Câu chuyện, timeline, doanh nghiệp, đếm số
+        ├── product.js      # Trang chi tiết sản phẩm
+        ├── cart.js         # Giỏ hàng
+        ├── checkout.js     # Thanh toán + gửi email đơn hàng
+        └── main.js         # Khởi tạo
 ```
+
+> JS dùng các `<script>` thường nạp theo thứ tự phụ thuộc (không phải ES module),
+> nên bạn vẫn mở trực tiếp `index.html` bằng trình duyệt được — không cần server.
 
 ## 🎨 Bảng màu
 
