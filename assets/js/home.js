@@ -8,7 +8,7 @@ function renderFeatured() {
   document.getElementById('featuredGrid').innerHTML = SIZES.map((s, i) => `
     <div class="card reveal">
       <div class="card-img-wrap card-clickable" onclick="viewProduct(${i})">
-        <img src="${GALLERY[i % GALLERY.length]}" alt="Khô bò ${s.size}" />
+        <img src="${s.img}" onerror="this.src='${FALLBACK_IMG}'" alt="Khô bò ${s.size}" />
         <span class="card-tag">Thủ công</span>
       </div>
       <div class="card-body">

@@ -17,7 +17,7 @@ function addToCart(sizeIndex, qty) {
   const s = SIZES[sizeIndex];
   const existing = cart.find(c => c.size === s.size);
   if (existing) { existing.qty += qty; }
-  else { cart.push({ size:s.size, price:s.price, qty, img:GALLERY[sizeIndex % GALLERY.length] }); }
+  else { cart.push({ size:s.size, price:s.price, qty, img:s.img }); }
   saveCart();
   updateBadge();
 }

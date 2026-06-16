@@ -10,23 +10,28 @@ function renderProductDetail() {
       ${s.size}<small>${fmt(s.price)}</small>
     </button>`).join('');
 
+  // Mỗi thumbnail là ảnh của một size; bấm thumbnail = chọn size đó.
   document.getElementById('galleryThumbs').innerHTML = GALLERY.map((g, i) => `
-    <img src="${g}" class="${i === 0 ? 'active' : ''}" onclick="setMainImg(this,'${g}')" alt="thumb ${i + 1}" />`).join('');
+    <img src="${g}" class="${i === pdState.sizeIndex ? 'active' : ''}" onclick="selectSize(${i})"
+         onerror="this.src='${FALLBACK_IMG}'" alt="Khô bò ${SIZES[i].size}" />`).join('');
 
+  setMainImg(SIZES[pdState.sizeIndex].img);
   updatePdPrice();
 }
 
-// Đổi ảnh lớn khi bấm thumbnail.
-function setMainImg(el, src) {
-  document.getElementById('galleryMain').src = src;
-  document.querySelectorAll('.gallery-thumbs img').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
+// Đặt ảnh lớn (có ảnh dự phòng nếu lỗi).
+function setMainImg(src) {
+  const main = document.getElementById('galleryMain');
+  main.onerror = () => { main.src = FALLBACK_IMG; };
+  main.src = src;
 }
 
-// Chọn size.
+// Chọn size: cập nhật nút size, thumbnail, ảnh lớn và giá.
 function selectSize(i) {
   pdState.sizeIndex = i;
   document.querySelectorAll('.size-btn').forEach((b, idx) => b.classList.toggle('active', idx === i));
+  document.querySelectorAll('.gallery-thumbs img').forEach((t, idx) => t.classList.toggle('active', idx === i));
+  setMainImg(SIZES[i].img);
   updatePdPrice();
 }
 

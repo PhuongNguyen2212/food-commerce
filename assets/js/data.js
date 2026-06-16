@@ -6,21 +6,20 @@
 // Tên sản phẩm dùng chung
 const PRODUCT_NAME = 'Khô Bò PEPE FOOD';
 
-// Các size + giá (đơn vị: đồng)
+// Ảnh dự phòng khi file ảnh sản phẩm bị thiếu/lỗi.
+const FALLBACK_IMG = 'https://images.unsplash.com/photo-1606851091851-e8c8c0fca5ba?w=900&q=80';
+
+// Các size + giá (đồng) + ảnh tương ứng theo khối lượng.
 const SIZES = [
-  { size:'100g', price:100000 },
-  { size:'200g', price:190000 },
-  { size:'300g', price:280000 },
-  { size:'500g', price:450000 },
+  { size:'100g', price:100000, img:'kho_bo_100g.jpg' },
+  { size:'200g', price:190000, img:'kho_bo_200g.jpg' },
+  { size:'300g', price:280000, img:'kho_bo_300g.jpg' },
+  { size:'400g', price:365000, img:'kho_bo_400g.jpg' },
+  { size:'500g', price:450000, img:'kho_bo_500g.jpg' },
 ];
 
-// Ảnh gallery sản phẩm (đặt ảnh thật vào assets/images/ rồi thay link)
-const GALLERY = [
-  'https://images.unsplash.com/photo-1606851091851-e8c8c0fca5ba?w=900&q=80',
-  'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=900&q=80',
-  'https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=900&q=80',
-  'https://images.unsplash.com/photo-1558030006-450675393462?w=900&q=80',
-];
+// Gallery trang chi tiết = ảnh của từng size (bấm thumbnail sẽ chọn size đó).
+const GALLERY = SIZES.map(s => s.img);
 
 // Đánh giá hiển thị ở trang chủ
 const TESTIMONIALS = [
